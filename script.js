@@ -1,45 +1,19 @@
-let editingItem = null; 
-document.getElementById("movie-form").addEventListener("submit", function (e) {
-  e.preventDefault();
+let movieList = [];
+let editingItem = null;
 
-  const title = document.getElementById("title").value;
-  const director = document.getElementById("director").value;
-  const year = document.getElementById("year").value;
+function saveToLocalStorage() {
+  localStorage.setItem("movies", JSON.stringify(movieList));
+}
 
-  const movie = { title, director, year };
+function renderMovieList() {
+  const list = document.getElementById("movie-list");
+  list.innerHTML = "";
+  movieList.forEach((movie, index) => {
+    addMovieToList(movie, index);
+  });
+}
 
-  if (editingItem) {
-    editingItem.innerHTML = `
-      <strong>${movie.title}</strong> - ${movie.director} (${movie.year})
-      <button class="edit-button">Editar</button>
-      <button class="delete-button">Eliminar</button>
-    `;
-
-    editingItem.querySelector(".delete-button").addEventListener("click", function () {
-      editingItem.remove();
-    });
-
-    editingItem.querySelector(".edit-button").addEventListener("click", function () {
-      document.getElementById("title").value = movie.title;
-      document.getElementById("director").value = movie.director;
-      document.getElementById("year").value = movie.year;
-
-      editingItem = editingItem;
-      document.querySelector("button[type='submit']").textContent = "Actualizar Película";
-    });
-
-    editingItem = null;
-    document.querySelector("button[type='submit']").textContent = "Agregar Película";
-  } else {
-    addMovieToList(movie);
-  }
-
-  this.reset();
-});
-
-
-
-function addMovieToList(movie) {
+function addMovieToList(movie, index) {
   const list = document.getElementById("movie-list");
   const item = document.createElement("li");
 
@@ -49,20 +23,50 @@ function addMovieToList(movie) {
     <button class="delete-button">Eliminar</button>
   `;
 
-  
   item.querySelector(".delete-button").addEventListener("click", function () {
-    list.removeChild(item);
+    movieList.splice(index, 1);
+    saveToLocalStorage();
+    renderMovieList();
   });
 
-  
   item.querySelector(".edit-button").addEventListener("click", function () {
     document.getElementById("title").value = movie.title;
     document.getElementById("director").value = movie.director;
     document.getElementById("year").value = movie.year;
-
-    editingItem = item;
+    editingItem = index;
     document.querySelector("button[type='submit']").textContent = "Actualizar Película";
   });
 
   list.appendChild(item);
 }
+
+
+document.getElementById("movie-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const director = document.getElementById("director").value;
+  const year = document.getElementById("year").value;
+
+  const movie = { title, director, year };
+
+  if (editingItem !== null) {
+    movieList[editingItem] = movie;
+    editingItem = null;
+    document.querySelector("button[type='submit']").textContent = "Agregar Película";
+  } else {
+    movieList.push(movie);
+  }
+
+  saveToLocalStorage();
+  renderMovieList();
+  this.reset();
+});
+
+window.addEventListener("load", () => {
+  const storedMovies = localStorage.getItem("movies");
+  if (storedMovies) {
+    movieList = JSON.parse(storedMovies);
+    renderMovieList();
+  }
+});
