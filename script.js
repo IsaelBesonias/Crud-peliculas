@@ -19,7 +19,15 @@ function addMovieToList(movie) {
   const list = document.getElementById("movie-list");
   const item = document.createElement("li");
 
-  item.textContent = `${movie.title} - ${movie.director} (${movie.year})`;
+  item.innerHTML = `
+    <strong>${movie.title}</strong> - ${movie.director} (${movie.year})
+    <button class="delete-button">Eliminar</button>
+  `;
+
+  // Agregar evento al botón de eliminar
+  item.querySelector(".delete-button").addEventListener("click", function () {
+    list.removeChild(item);
+  });
 
   list.appendChild(item);
 }
