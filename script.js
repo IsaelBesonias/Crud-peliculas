@@ -7,9 +7,13 @@ function saveToLocalStorage() {
 
 function renderMovieList() {
   const list = document.getElementById("movie-list");
+  const searchTerm = document.getElementById("search")?.value?.toLowerCase() || "";
   list.innerHTML = "";
+
   movieList.forEach((movie, index) => {
-    addMovieToList(movie, index);
+    if (movie.title.toLowerCase().includes(searchTerm)) {
+      addMovieToList(movie, index);
+    }
   });
 }
 
@@ -47,7 +51,6 @@ function addMovieToList(movie, index) {
   list.appendChild(item);
 }
 
-
 document.getElementById("movie-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -78,3 +81,8 @@ window.addEventListener("load", () => {
     renderMovieList();
   }
 });
+
+const searchInput = document.getElementById("search");
+if (searchInput) {
+  searchInput.addEventListener("input", renderMovieList);
+}
