@@ -86,3 +86,15 @@ const searchInput = document.getElementById("search");
 if (searchInput) {
   searchInput.addEventListener("input", renderMovieList);
 }
+
+const clearBtn = document.getElementById("clear-all");
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar Todas las películas?");
+    if (confirmDelete) {
+      movieList = [];
+      saveToLocalStorage();
+      renderMovieList();
+    }
+  });
+}
