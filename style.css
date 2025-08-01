@@ -30,7 +30,7 @@ li {
 }
 
 .delete-button {
-  margin-left: 15px;
+  margin-left: 10px;
   background-color: #e74c3c;
   color: white;
   border: none;
@@ -41,4 +41,18 @@ li {
 
 .delete-button:hover {
   background-color: #c0392b;
+}
+
+.edit-button {
+  margin-left: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
 }
