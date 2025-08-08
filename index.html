@@ -9,21 +9,34 @@
 <body>
   <h1>Biblioteca de Películas</h1>
 
-  <form id="movie-form">
-    <input type="text" id="title" placeholder="Título" required />
-    <input type="text" id="director" placeholder="Director" required />
-    <input type="number" id="year" placeholder="Año" required />
-    <input type="url" id="image" placeholder="URL del póster" required />
-    <button type="submit">Agregar Película</button>
-  </form>
-
-  <input type="text" id="search" placeholder="Buscar por título..." />
-
-  <div style="margin-top: 10px;">
-    <button id="clear-all">Eliminar todas las películas</button>
+  
+  <div id="login-container">
+    <form id="login-form">
+      <input type="text" id="login-user" placeholder="Usuario" required />
+      <input type="password" id="login-pass" placeholder="Contraseña" required />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
   </div>
 
-  <ul id="movie-list"></ul>
+  
+  <div id="app-container" style="display: none;">
+    <form id="movie-form">
+      <input type="text" id="title" placeholder="Título" required />
+      <input type="text" id="director" placeholder="Director" required />
+      <input type="number" id="year" placeholder="Año" required />
+      <input type="url" id="image" placeholder="URL del póster" required />
+      <button type="submit">Agregar Película</button>
+    </form>
+
+    <input type="text" id="search" placeholder="Buscar por título..." />
+
+    <div style="margin-top: 10px;">
+      <button id="clear-all">Eliminar todas las películas</button>
+      <button id="logout">Cerrar sesión</button>
+    </div>
+
+    <ul id="movie-list"></ul>
+  </div>
 
   <script src="script.js"></script>
 </body>

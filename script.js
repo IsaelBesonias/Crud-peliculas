@@ -1,6 +1,38 @@
 let movieList = [];
 let editingItem = null;
 
+const CREDENTIALS = {
+  username: "Isael",
+  password: "12345"
+};
+
+function checkLoginStatus() {
+  const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+  document.getElementById("login-container").style.display = isLoggedIn ? "none" : "block";
+  document.getElementById("app-container").style.display = isLoggedIn ? "block" : "none";
+
+  if (isLoggedIn) renderMovieList();
+}
+
+document.getElementById("login-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const user = document.getElementById("login-user").value;
+  const pass = document.getElementById("login-pass").value;
+
+  if (user === CREDENTIALS.username && pass === CREDENTIALS.password) {
+    localStorage.setItem("loggedIn", "true");
+    checkLoginStatus();
+  } else {
+    alert("Credenciales incorrectas. Usuario: Isael / Contraseña: 12345");
+  }
+});
+
+document.getElementById("logout").addEventListener("click", () => {
+  localStorage.removeItem("loggedIn");
+  location.reload();
+});
+
 function saveToLocalStorage() {
   localStorage.setItem("movies", JSON.stringify(movieList));
 }
@@ -78,8 +110,8 @@ window.addEventListener("load", () => {
   const storedMovies = localStorage.getItem("movies");
   if (storedMovies) {
     movieList = JSON.parse(storedMovies);
-    renderMovieList();
   }
+  checkLoginStatus();
 });
 
 const searchInput = document.getElementById("search");
@@ -87,10 +119,11 @@ if (searchInput) {
   searchInput.addEventListener("input", renderMovieList);
 }
 
+
 const clearBtn = document.getElementById("clear-all");
 if (clearBtn) {
   clearBtn.addEventListener("click", () => {
-    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar Todas las películas?");
+    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar todas las películas?");
     if (confirmDelete) {
       movieList = [];
       saveToLocalStorage();
