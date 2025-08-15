@@ -23,7 +23,8 @@
     <form id="movie-form">
       <input type="text" id="title" placeholder="Título" required />
       <input type="text" id="director" placeholder="Director" required />
-      <input type="number" id="year" placeholder="Año" required />
+      
+      <input type="number" id="year" placeholder="Año" min="1888" max="2025" required />
       <input type="url" id="image" placeholder="URL del póster" required />
       <button type="submit">Agregar Película</button>
     </form>

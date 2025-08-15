@@ -86,10 +86,18 @@ function addMovieToList(movie, index) {
 document.getElementById("movie-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const title = document.getElementById("title").value;
-  const director = document.getElementById("director").value;
-  const year = document.getElementById("year").value;
-  const image = document.getElementById("image").value;
+  const title = document.getElementById("title").value.trim();
+  const director = document.getElementById("director").value.trim();
+  const year = parseInt(document.getElementById("year").value.trim());
+  const image = document.getElementById("image").value.trim();
+
+  const currentYear = new Date().getFullYear();
+
+  
+  if (isNaN(year) || year < 1888 || year > currentYear) {
+    alert(`Por favor, ingresa un año válido entre 1888 y ${currentYear}.`);
+    return;
+  }
 
   const movie = { title, director, year, image };
 
@@ -111,6 +119,14 @@ window.addEventListener("load", () => {
   if (storedMovies) {
     movieList = JSON.parse(storedMovies);
   }
+
+  
+  const yearInput = document.getElementById("year");
+  if (yearInput) {
+    yearInput.setAttribute("min", "1888");
+    yearInput.setAttribute("max", new Date().getFullYear().toString());
+  }
+
   checkLoginStatus();
 });
 
@@ -118,7 +134,6 @@ const searchInput = document.getElementById("search");
 if (searchInput) {
   searchInput.addEventListener("input", renderMovieList);
 }
-
 
 const clearBtn = document.getElementById("clear-all");
 if (clearBtn) {
