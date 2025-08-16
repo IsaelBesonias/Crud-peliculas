@@ -17,8 +17,8 @@ function checkLoginStatus() {
 document.getElementById("login-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const user = document.getElementById("login-user").value;
-  const pass = document.getElementById("login-pass").value;
+  const user = document.getElementById("login-user").value.trim();
+  const pass = document.getElementById("login-pass").value.trim();
 
   if (user === CREDENTIALS.username && pass === CREDENTIALS.password) {
     localStorage.setItem("loggedIn", "true");
@@ -55,7 +55,7 @@ function addMovieToList(movie, index) {
 
   item.innerHTML = `
     <div style="display: flex; align-items: center;">
-      <img src="${movie.image}" alt="Poster" style="height: 100px; margin-right: 10px;">
+      <img src="${movie.image}" alt="Poster" style="height: 100px; margin-right: 10px; border-radius: 5px;">
       <div>
         <strong>${movie.title}</strong> - ${movie.director} (${movie.year})<br>
         <button class="edit-button">Editar</button>
@@ -75,6 +75,8 @@ function addMovieToList(movie, index) {
     document.getElementById("director").value = movie.director;
     document.getElementById("year").value = movie.year;
     document.getElementById("image").value = movie.image;
+    document.getElementById("image-preview").src = movie.image;
+    document.getElementById("image-preview").style.display = "block";
 
     editingItem = index;
     document.querySelector("button[type='submit']").textContent = "Actualizar Película";
@@ -93,7 +95,10 @@ document.getElementById("movie-form").addEventListener("submit", function (e) {
 
   const currentYear = new Date().getFullYear();
 
-  
+  if (!title || !director || !year || !image) {
+    alert("Por favor, completa todos los campos.");
+    return;
+  }
   if (isNaN(year) || year < 1888 || year > currentYear) {
     alert(`Por favor, ingresa un año válido entre 1888 y ${currentYear}.`);
     return;
@@ -112,6 +117,18 @@ document.getElementById("movie-form").addEventListener("submit", function (e) {
   saveToLocalStorage();
   renderMovieList();
   this.reset();
+  document.getElementById("image-preview").style.display = "none";
+});
+
+document.getElementById("image").addEventListener("input", function () {
+  const url = this.value.trim();
+  const preview = document.getElementById("image-preview");
+  if (url) {
+    preview.src = url;
+    preview.style.display = "block";
+  } else {
+    preview.style.display = "none";
+  }
 });
 
 window.addEventListener("load", () => {
@@ -120,7 +137,6 @@ window.addEventListener("load", () => {
     movieList = JSON.parse(storedMovies);
   }
 
-  
   const yearInput = document.getElementById("year");
   if (yearInput) {
     yearInput.setAttribute("min", "1888");
