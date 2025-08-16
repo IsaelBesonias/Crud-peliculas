@@ -7,36 +7,37 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Biblioteca de Películas</h1>
+  <div class="container">
+    <h1>🎬 Biblioteca de Películas</h1>
 
-  
-  <div id="login-container">
-    <form id="login-form">
-      <input type="text" id="login-user" placeholder="Usuario" required />
-      <input type="password" id="login-pass" placeholder="Contraseña" required />
-      <button type="submit">Iniciar Sesión</button>
-    </form>
-  </div>
-
-  
-  <div id="app-container" style="display: none;">
-    <form id="movie-form">
-      <input type="text" id="title" placeholder="Título" required />
-      <input type="text" id="director" placeholder="Director" required />
-      
-      <input type="number" id="year" placeholder="Año" min="1888" max="2025" required />
-      <input type="url" id="image" placeholder="URL del póster" required />
-      <button type="submit">Agregar Película</button>
-    </form>
-
-    <input type="text" id="search" placeholder="Buscar por título..." />
-
-    <div style="margin-top: 10px;">
-      <button id="clear-all">Eliminar todas las películas</button>
-      <button id="logout">Cerrar sesión</button>
+    <div id="login-container">
+      <form id="login-form">
+        <input type="text" id="login-user" placeholder="Usuario" required />
+        <input type="password" id="login-pass" placeholder="Contraseña" required />
+        <button type="submit">Iniciar Sesión</button>
+      </form>
     </div>
 
-    <ul id="movie-list"></ul>
+    <div id="app-container" style="display: none;">
+      <form id="movie-form">
+        <input type="text" id="title" placeholder="Título" required />
+        <input type="text" id="director" placeholder="Director" required />
+        <input type="number" id="year" placeholder="Año" min="1888" max="2025" required />
+        <input type="url" id="image" placeholder="URL del póster" required />
+        <img id="image-preview" src="" alt="Vista previa" style="display:none; max-height:150px; margin-top:10px; border-radius:5px;">
+
+        <button type="submit">Agregar Película</button>
+      </form>
+
+      <input type="text" id="search" placeholder="Buscar por título..." />
+
+      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <button id="clear-all">Eliminar todas las películas</button>
+        <button id="logout">Cerrar sesión</button>
+      </div>
+
+      <ul id="movie-list"></ul>
+    </div>
   </div>
 
   <script src="script.js"></script>
